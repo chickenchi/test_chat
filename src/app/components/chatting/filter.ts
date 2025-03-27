@@ -68,6 +68,16 @@ export const bannedWords = [
   "ㅈ돼",
 ];
 
+export const godWords = [
+  "김민",
+  "민우",
+  "우민",
+  "우민",
+  "민김",
+  "김우",
+  "우김",
+]
+
 export function generateRegex(word: string) {
   const chars = word
     .split("")
@@ -78,19 +88,29 @@ export function generateRegex(word: string) {
   return new RegExp(`(?:^|\\W)${chars}(?:$|\\W)`, "gi");
 }
 
-export function isMessageBanned(message: string) {
-  // 특수문자만 있는 경우는 통과시키기
+export function checkMessage(message: string): 'god' | 'banned' | 'safe' {
   if (/^[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]+$/.test(message)) {
-    return false;
+    return 'safe';
   }
 
-  // 욕설 목록에 있는 단어를 체크하여 필터링
-  return bannedWords.some((word) => generateRegex(word).test(message));
+  if (godWords.some(word => generateRegex(word).test(message))) {
+    return 'god';
+  }
+
+  if (bannedWords.some(word => generateRegex(word).test(message))) {
+    return 'banned';
+  }
+
+  return 'safe';
 }
 
+
 export function handleMessageSend(inputMessage: string) {
-  if (isMessageBanned(inputMessage)) {
+  if (checkMessage(inputMessage) === "banned") {
     alert("바르고 고운 말을 씁시다^^");
+    return "bad word";
+  } else if (checkMessage(inputMessage) === "god") {
+    alert("어허... 그분의 이름은 드러나면 안 돼요!");
     return "bad word";
   }
   return inputMessage;

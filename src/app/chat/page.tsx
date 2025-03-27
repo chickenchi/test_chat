@@ -48,6 +48,14 @@ const Title = styled.p`
   color: white;
 `;
 
+const Description = styled.p`
+  font-size: 13pt;
+  font-weight: 600;
+  padding: 15px;
+  height: 5%;
+  color: white;
+`;
+
 const MessageContainer = styled.div`
   height: 88%;
   padding: 10px;
@@ -209,7 +217,10 @@ export default function ChatPage() {
         </NicknameContainer>
       ) : (
         <ChatContainer>
-          <Title>채팅방 (접속자 수: {onlineUsers}명)</Title>
+          <Title>채팅방 (생성된 유저 수: {onlineUsers}명)</Title>
+          <Description>
+            ※ 개인 정보 등 민감한 내용은 작성하면 안 돼요!
+          </Description>
           <MessageContainer>
             {messages.map((msg) => (
               <div key={msg.id}>
