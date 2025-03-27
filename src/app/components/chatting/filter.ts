@@ -95,4 +95,3 @@ export function handleMessageSend(inputMessage: string) {
   }
   return inputMessage;
 }
-

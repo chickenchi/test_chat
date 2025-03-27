@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useChat } from "@/hooks/useChat";
 import styled from "styled-components";
 import { handleMessageSend } from "../components/chatting/filter";
@@ -115,6 +115,8 @@ export default function ChatPage() {
   const { messages, sendMessage } = useChat(roomId);
   const [input, setInput] = useState("");
 
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+
   const filterAndSendMessage = (input: string) => {
     const result = handleMessageSend(input);
 
@@ -123,6 +125,12 @@ export default function ChatPage() {
     sendMessage(result);
     return "success";
   };
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]); // 메시지가 변경될 때마다 실행
 
   return (
     <ChatDiv>
@@ -136,6 +144,7 @@ export default function ChatPage() {
               <Message key={msg.id}>{msg.text}</Message>
             </>
           ))}
+          <div ref={messageEndRef} />
         </MessageContainer>
         <InputContainer>
           <Text
