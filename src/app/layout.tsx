@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Chat",
-  description: "바보들의 채팅방",
+  description: "채팅방",
 };
 
 export default function RootLayout({
