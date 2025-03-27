@@ -33,6 +33,7 @@ export const bannedWords = [
   "쌍년",
   "썅",
   "씹",
+  "시발",
   "씨발",
   "씨팔",
   "아가리",
@@ -70,18 +71,20 @@ export const bannedWords = [
 export function generateRegex(word: string) {
   const chars = word
     .split("")
-    .map((ch) => `[${ch}0-9]{0,1}`) // 특수문자 배제, 숫자는 0~1개 허용
+    .map((ch) => `[${ch}]`)  // 각 문자 그대로 매칭하도록 수정
     .join("");
 
-  // 자음(ㄱ-ㅎ)과 모음(ㅏ-ㅣ)을 포함하여 한글과 영어가 아닌 문자가 있을 때만 매칭
-  return new RegExp(`(?<![ㄱ-ㅎㅏ-ㅣa-zA-Z])${chars}(?![ㄱ-ㅎㅏ-ㅣa-zA-Z])`, "gi");
+  // 정확히 단어가 포함된 경우만 매칭
+  return new RegExp(`(?:^|\\W)${chars}(?:$|\\W)`, "gi");
 }
 
 export function isMessageBanned(message: string) {
+  // 특수문자만 있는 경우는 통과시키기
   if (/^[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]+$/.test(message)) {
     return false;
   }
 
+  // 욕설 목록에 있는 단어를 체크하여 필터링
   return bannedWords.some((word) => generateRegex(word).test(message));
 }
 
@@ -92,3 +95,4 @@ export function handleMessageSend(inputMessage: string) {
   }
   return inputMessage;
 }
+
