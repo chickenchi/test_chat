@@ -233,6 +233,9 @@ export default function ChatPage() {
           <InputContainer>
             <Text
               value={input}
+              placeholder={`당신의 닉네임은 ${
+                nickname ? nickname : "없음"
+              }입니다. 개인 정보인 경우 구글 계정을 변경해 주세요.`}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && input.trim()) {
