@@ -72,24 +72,32 @@ const Name = styled.p`
 const Message = styled.p`
   background-color: white;
   display: inline-block;
+
   width: auto;
   max-width: 250px;
+
   border-radius: 3px;
+
   margin: 6px;
   margin-left: 0;
+
   color: black;
   font-size: 14pt;
+
   padding: 8px;
   align-self: flex-start;
 `;
 
 const InputContainer = styled.div`
   background-color: rgb(255, 255, 255);
+
   border-radius: 5px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+
   width: 100%;
-  height: 8%;
+  height: 9%;
+
   display: flex;
   align-items: center;
 `;
